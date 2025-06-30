@@ -17,7 +17,7 @@ pub enum Statement {
 
 #[derive(Debug, Clone)]
 pub enum Expression {
-        Identifier { token: Token, value: String },
+    Identifier { token: Token, value: String },
 }
 
 #[derive(Debug)]

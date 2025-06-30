@@ -17,7 +17,7 @@ mod tests {
                     "#;
 
         let mut lexer = Lexer::new(input);
-        let mut parser = Parser::new(&mut lexer).expect("failed to create parser");
+        let mut parser = Parser::new(&mut lexer);
 
         let program = parser.parse_program().expect("failed to parse program");
 

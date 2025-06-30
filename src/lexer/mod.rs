@@ -45,7 +45,7 @@ impl<'a> Lexer<'a> {
         lexer
     }
 
-    pub fn next_token(&mut self) -> Result<Token, LexerError> {
+    pub fn next_token(&mut self) -> Token {
         self.skip_whitespace();
 
         let token = if let Some(c) = self.ch {
@@ -54,7 +54,7 @@ impl<'a> Lexer<'a> {
             } else if c.is_ascii_alphabetic() {
                 Token::ident(self.read_identifier())
             } else if c.is_ascii_digit() {
-                Token::int(self.read_number()?)
+                Token::int(self.read_number())
             } else {
                 self.read_char();
                 Token::new(TokenType::Illegal, c.to_string())
@@ -63,7 +63,7 @@ impl<'a> Lexer<'a> {
             Token::eof()
         };
 
-        Ok(token)
+        token
     }
 
     fn read_char(&mut self) {
@@ -88,7 +88,7 @@ impl<'a> Lexer<'a> {
         self.input[start..self.position].to_string()
     }
 
-    fn read_number(&mut self) -> Result<String, LexerError> {
+    fn read_number(&mut self) -> String {
         let start = self.position;
 
         while matches!(self.ch, Some(c) if c.is_ascii_digit()) {
@@ -96,10 +96,7 @@ impl<'a> Lexer<'a> {
         }
 
         let number = &self.input[start..self.position];
-        let _ = number
-            .parse::<i32>()
-            .map_err(|e| LexerError::InvalidNumber(number.to_string(), e));
-        Ok(number.to_string())
+        number.to_string()
     }
 
     fn read_symbol(&mut self) -> Option<String> {

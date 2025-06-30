@@ -17,16 +17,8 @@ pub fn start<R: std::io::BufRead, W: std::io::Write>(mut input: R, mut output: W
 
         loop {
             match lexer.next_token() {
-                Ok(t) if t.token_type == TokenType::Eof => {
-                    break;
-                }
-                Ok(t) => {
-                    writeln!(output, "{}", t)?;
-                }
-                Err(e) => {
-                    writeln!(output, "Error: {:?}", e)?;
-                    break;
-                }
+                t if t.token_type == TokenType::Eof => break,
+                t => writeln!(output, "{}", t)?,
             }
         }
     }

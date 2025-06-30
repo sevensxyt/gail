@@ -116,7 +116,7 @@ mod tests {
         let mut lexer = Lexer::new(input);
 
         for (i, (expected_token_type, expected_literal)) in expected.iter().enumerate() {
-            let received = lexer.next_token().unwrap();
+            let received = lexer.next_token();
 
             assert_eq!(
                 expected_token_type, &received.token_type,
